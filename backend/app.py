@@ -1,3 +1,4 @@
+import fitz  # PyMuPDF
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -11,10 +12,17 @@ def home():
 @app.route("/upload", methods=["POST"])
 def upload_resume():
     file = request.files["resume"]
+
+    # Read PDF
+    pdf = fitz.open(stream=file.read(), filetype="pdf")
     
+    text = ""
+    for page in pdf:
+        text += page.get_text()
+
     return jsonify({
-        "message": "Resume received successfully!",
-        "filename": file.filename
+        "message": "Resume processed successfully!",
+        "text": text[:500]  # first 500 characters
     })
 
 if __name__ == "__main__":

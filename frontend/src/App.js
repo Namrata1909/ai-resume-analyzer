@@ -19,7 +19,7 @@ function App() {
       });
 
       const data = await res.json();
-      alert(data.message + " (" + data.filename + ")");
+      alert(data.message + "\n\n" + data.text);
     } catch (error) {
       console.error(error);
       alert("Error uploading file");
