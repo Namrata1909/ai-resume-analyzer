@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 function App() {
   const [file, setFile] = useState(null);
@@ -60,10 +62,21 @@ function App() {
         {result && (
           <div className="mt-6 text-left text-white">
             
-            {/* ATS Score */}
-            <h2 className="text-xl font-bold mb-3">
-              ATS Score: {result.ats_score}%
-            </h2>
+           <div className="w-24 h-24 mx-auto mb-4">
+            <CircularProgressbar
+              value={result.ats_score}
+              text={`${result.ats_score}%`}
+              styles={buildStyles({
+                textColor: "#fff",
+                pathColor: "#3b82f6",
+                trailColor: "#374151",
+            })}
+          />
+        </div>
+
+<p className="text-center mb-3 font-semibold">
+  ATS Score
+</p>
 
             {/* Skills */}
             <div>
