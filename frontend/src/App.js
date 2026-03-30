@@ -22,7 +22,7 @@ function App() {
       });
 
       const data = await res.json();
-      setResult(data); // store result
+      setResult(data);
     } catch (error) {
       console.error(error);
       alert("Error uploading file");
@@ -62,30 +62,52 @@ function App() {
         {result && (
           <div className="mt-6 text-left text-white">
             
-           <div className="w-24 h-24 mx-auto mb-4">
-            <CircularProgressbar
-              value={result.ats_score}
-              text={`${result.ats_score}%`}
-              styles={buildStyles({
-                textColor: "#fff",
-                pathColor: "#3b82f6",
-                trailColor: "#374151",
-            })}
-          />
-        </div>
+            {/* ATS Circular Score */}
+            <div className="w-24 h-24 mx-auto mb-4">
+              <CircularProgressbar
+                value={result.ats_score}
+                text={`${result.ats_score}%`}
+                styles={buildStyles({
+                  textColor: "#fff",
+                  pathColor: "#3b82f6",
+                  trailColor: "#374151",
+                })}
+              />
+            </div>
 
-<p className="text-center mb-3 font-semibold">
-  ATS Score
-</p>
+            <p className="text-center mb-3 font-semibold">
+              ATS Score
+            </p>
 
             {/* Skills */}
-            <div>
-              <h3 className="font-semibold mb-2">Skills:</h3>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2 text-blue-400">
+                Skills Found:
+              </h3>
+
               <div className="flex flex-wrap gap-2">
                 {result.skills.map((skill, index) => (
                   <span 
                     key={index}
                     className="bg-blue-500 px-3 py-1 rounded-full text-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Missing Skills */}
+            <div>
+              <h3 className="font-semibold mb-2 text-red-400">
+                Recommended Skills (Missing):
+              </h3>
+
+              <div className="flex flex-wrap gap-2">
+                {result.missing_skills.slice(0, 6).map((skill, index) => (
+                  <span 
+                    key={index}
+                    className="bg-red-500 px-3 py-1 rounded-full text-sm"
                   >
                     {skill}
                   </span>

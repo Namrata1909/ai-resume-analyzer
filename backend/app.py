@@ -38,10 +38,17 @@ def upload_resume():
     matched_skills = len(found_skills)
     ats_score = int((matched_skills / total_skills) * 100)
 
+    # Missing skills (skill gap)
+    missing_skills = []
+    for skill in SKILLS_DB:
+        if skill not in found_skills:
+            missing_skills.append(skill)
+
     return jsonify({
         "message": "Resume analyzed successfully!",
         "skills": found_skills,
-        "ats_score": ats_score
+        "ats_score": ats_score,
+        "missing_skills": missing_skills
     })
 
 if __name__ == "__main__":
