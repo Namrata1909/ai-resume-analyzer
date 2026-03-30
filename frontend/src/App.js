@@ -19,7 +19,11 @@ function App() {
       });
 
       const data = await res.json();
-      alert(data.message + "\n\n" + data.text);
+      alert(
+        data.message +
+        "\n\nATS Score: " + data.ats_score + "%" +
+        "\n\nSkills:\n" + data.skills.join(", ")
+     );
     } catch (error) {
       console.error(error);
       alert("Error uploading file");
