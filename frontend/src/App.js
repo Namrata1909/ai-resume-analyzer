@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function App() {
   const [file, setFile] = useState(null);
+  const [result, setResult] = useState(null);
 
   const handleUpload = async () => {
     if (!file) {
@@ -19,11 +20,7 @@ function App() {
       });
 
       const data = await res.json();
-      alert(
-        data.message +
-        "\n\nATS Score: " + data.ats_score + "%" +
-        "\n\nSkills:\n" + data.skills.join(", ")
-     );
+      setResult(data); // store result
     } catch (error) {
       console.error(error);
       alert("Error uploading file");
@@ -43,6 +40,7 @@ function App() {
           Upload your resume and get instant AI-powered insights 🚀
         </p>
 
+        {/* File Input */}
         <input 
           type="file"
           onChange={(e) => setFile(e.target.files[0])}
@@ -51,11 +49,39 @@ function App() {
           file:bg-blue-500 file:text-white hover:file:bg-blue-600"
         />
 
+        {/* Button */}
         <button 
           onClick={handleUpload}
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold transition duration-300">
           Analyze Resume
         </button>
+
+        {/* Result Section */}
+        {result && (
+          <div className="mt-6 text-left text-white">
+            
+            {/* ATS Score */}
+            <h2 className="text-xl font-bold mb-3">
+              ATS Score: {result.ats_score}%
+            </h2>
+
+            {/* Skills */}
+            <div>
+              <h3 className="font-semibold mb-2">Skills:</h3>
+              <div className="flex flex-wrap gap-2">
+                {result.skills.map((skill, index) => (
+                  <span 
+                    key={index}
+                    className="bg-blue-500 px-3 py-1 rounded-full text-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        )}
 
       </div>
 
